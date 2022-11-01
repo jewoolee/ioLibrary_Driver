@@ -212,7 +212,9 @@ void wiz_recv_data(uint8_t sn, uint8_t *wizdata, uint32_t len)
       }
       else  wizdata[i] = (uint8_t)rd;  // For checking the memory access violation
    }
-   sock_remained_byte[sn] = (uint8_t)rd; // back up the remaind fifo byte.
+   sock_remained_byte[sn] = (uint8_t)rd & 0x00FFu; // back up the remaind fifo byte.
+                              // If you use 16 bit process, perhaps, It should be recv buffer error
+                              // I think it should be inclue the mask LSB.
 }
 
 void wiz_recv_ignore(uint8_t sn, uint32_t len)
